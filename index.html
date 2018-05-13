@@ -69,12 +69,15 @@
 
 <div id="nav1">
      <img src="image/search1.jpg" height="80px" width="120px"/> 
-    <input type="button" style="background:rgb(162,205,90)" id="btnhtml1" value="详细探测结果" onclick="window.location.href='result.html'"/>
+     <button id="btnCheck" type="button" class="btn btn-primary" style="margin: 5px;width: 120px" onclick="window.location.href='result.html'">详细探测结果</button>
     <br><br>
+    
      <img src="image/vis.jpg" height="80px" width="120px"/> 
-    <input type="button" style="background:rgb(162,205,90)" id="btnhtml2" value="多源大数据列表" onclick="window.location.href='data.html'"/><br><br>
+    <button id="btnCheck" type="button" class="btn btn-primary" style="margin: 5px;width: 120px" onclick="window.location.href='data.html'">多源大数据浏览</button>
+     <button id="btnCheck" type="button" class="btn btn-primary" style="margin: 5px;width: 120px" onclick="window.location.href='crawl.html'">抓取网站管理</button><br><br>
+    
      <img src="image/zj.jpg" height="80px" width="120px"/> 
-    <input type="button" style="background:rgb(162,205,90)" id="btnhtml2" value="要素变化探测原理" onclick="window.location.href='method.html'"/><br><br>
+    <button id="btnCheck" type="button" class="btn btn-primary" style="margin: 5px;width: 120px" onclick="window.location.href='method.html'">变化探测原理</button><br><br>
 </div>
 <div id="nav2">
     要素类别：<br>
@@ -226,19 +229,19 @@
             }  
             return test;  
         };  
-		<!-- $("#upload-btn").click(function() {   -->
-		<!-- var data = []; -->
+		//<!-- $("#upload-btn").click(function() {   -->
+	//	<!-- var data = []; -->
         var data = [];  
-            <!-- var files = document.getElementById("file-value").files;   -->
-            <!-- var regp = new RegExp(".*,\".*,.*\"$");  -->
-			<!-- var file = files[0];   -->
+       //     <!-- var files = document.getElementById("file-value").files;   -->
+        //    <!-- var regp = new RegExp(".*,\".*,.*\"$");  -->
+		//	<!-- var file = files[0];   -->
   
-                <!-- var reader = new FileReader(); -->
-				 <!-- reader.readAsText(file);   -->
-                <!-- reader.onload = function(f) {  -->
-				<!-- var relArr = this.result.split("\r\n");   -->
+       //         <!-- var reader = new FileReader(); -->
+		//		 <!-- reader.readAsText(file);   -->
+       //         <!-- reader.onload = function(f) {  -->
+		//		<!-- var relArr = this.result.split("\r\n");   -->
 		$.get("https://qqq807111690.github.io/web4gis15/all.csv",null,function(result){  
-                <!-- reader.onload = function(f) {   -->
+              //  <!-- reader.onload = function(f) {   -->
                     //                  var result = document.getElementById("result");  
                     //显示文件 
                     var relArr = result.split(/\n/);  
