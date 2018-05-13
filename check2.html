@@ -2,16 +2,17 @@
 <html>
 
 <head>
-    <title>基于多源大数据的浙江省基础测绘要素变化探测系统</title>
+    <title>基于多源大数据的省级基础测绘要素变化探测系统</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- 引入 Bootstrap -->
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://js.arcgis.com/3.24/dijit/themes/claro/claro.css">
     <link rel="stylesheet" href="https://js.arcgis.com/3.24/esri/css/esri.css">
     <!--           高德API引用-->
-    <link rel="stylesheet" href="http://cache.amap.com/lbs/static/main1119.css" />
+    <link rel="stylesheet" href="http://cache.amap.com/lbs/static/main1119.css"/>
     <script type="text/javascript" src="http://webapi.amap.com/maps?v=1.4.6&key=be84d06ad21b7f210fff0d7a21cb778c&plugin=AMap.Geocoder"></script>
     <script type="text/javascript" src="http://cache.amap.com/lbs/static/addToolbar.js"></script>
+
     <!-- HTML5 Shiv 和 Respond.js 用于让 IE8 支持 HTML5元素和媒体查询 -->
     <!-- 注意： 如果通过 file://  引入 Respond.js 文件，则该文件无法起效果 -->
     <!--[if lt IE 9]>
@@ -47,6 +48,7 @@
             padding: 5px;
 
         }
+
     </style>
     <!-- jQuery (Bootstrap 的 JavaScript 插件需要引入 jQuery) -->
     <script src="https://code.jquery.com/jquery.js"></script>
@@ -67,52 +69,42 @@
                 location: this.location.pathname.replace(/\/[^/]+$/, "") + "/src"
             }]
         };
+
     </script>
+
     <script src="https://js.arcgis.com/3.23/"></script>
-
-
-    <script type="text/javascript" src="http://api.map.baidu.com/api?v=3.0&ak=3f89da664985fb5d0370cb34a2d04488"></script>
     <script src="js/q.js"></script>
+    
+
     <script>
-        var Baidumap, Gaodemap, OSMmap, Tiandimap, Satellitemap, geomap; //地图名称定义
-        var longitude = 0,
-            latitude = 0,
-            level = 0; //高德地图查询参数
-        var check = 0;
-        //地图联动控制变量
-        var a = 0,
-            b = 0,
-            c = 0,
-            d = 0;
+        var Baidumap,Gaodemap,OSMmap,Tiandimap,Satellitemap,geomap;//地图名称定义
+      	var a=0,b=0,c=0,d=0;//地图联动控制变量
+    	var longitude=0,latitude=0,level=0;//高德地图查询参数
+    	var check=0;
         require([
                 "esri/map",
                 "src/BaiduLayer",
-                "src/BDLyr",
                 "src/GaodeLayer",
                 "src/TiandiLayer",
                 "src/TiandiAnnoLayer",
                 "esri/geometry/Extent",
                 "esri/SpatialReference",
-                "esri/geometry/webMercatorUtils",
                 "dojo/parser",
                 "dojo/domReady!"
             ],
-            function(Map, BaiduLayer, BDLyr, GaodeLayer, TiandiLayer, TiandiAnnoLayer, Extent, SpatialReference, webMercatorUtils, parser) {
+            function(Map, BaiduLayer, GaodeLayer, TiandiLayer, TiandiAnnoLayer, Extent, SpatialReference, parser) {
                 parser.parse();
-
-                $("#btnQuery").click(queryOSM);
-
-
+               $("#btnQuery").click(queryOSM);
+               
+            
                 var dataExtent = new Extent(116.5, 28.5, 119.5, 33.5, new SpatialReference(4326));
 
-                var Satellitemap = new BMap.Map("Baidumap");
-                // 创建地图实例  
-                var point = new BMap.Point(dataExtent.getCenter().x, dataExtent.getCenter().y);
-
-                // 创建点坐标  
-                Satellitemap.centerAndZoom(point, 8);
-                Satellitemap.enableScrollWheelZoom(true);
-
+                Satellitemap = new Map("Baidumap", {
+                    basemap: "satellite",
+                    extent: dataExtent,
+                    //        center: [114.2, 30.6], // longitude, latitude
+                    //        zoom: 8
+                });
 
                 //加载高德地图图层
                 Gaodemap = new Map("Gaodemap", {
@@ -151,12 +143,18 @@
                 var tiandilabellayer = new TiandiAnnoLayer();
                 Tiandimap.addLayer(tiandilayer);
                 Tiandimap.addLayer(tiandilabellayer);
+                
+                //高德地图查询 	
+		      	geomap = new AMap.Map("geomap", {
+		        		resizeEnable: true
+		    	});
+
 
                 //联动
-                Satellitemap.addEventListener("mouseover", function(event) {
+                Satellitemap.on("mouse-over", function(event) {
                     a = 1;
                 });
-                Satellitemap.addEventListener("mouseout", function(event) {
+                Satellitemap.on("mouse-out", function(event) {
                     a = 0;
                 });
                 Gaodemap.on("mouse-over", function(event) {
@@ -178,48 +176,25 @@
                     d = 0;
                 });
 
-                Satellitemap.addEventListener("zoomend", function(event) {
+                Satellitemap.on("extent-change", function(event) {
                     if (a == 1) {
-                        var bds = this.getBounds();
-                        var ext_ = new Extent(bds.getSouthWest().lng, bds.getSouthWest().lat, bds.getNorthEast().lng, bds.getNorthEast().lat, new SpatialReference(4326));
                         if (Gaodemap) {
-                            Gaodemap.setExtent(ext_);
+                            Gaodemap.setExtent(event.extent);
                         }
                         if (OSMmap) {
-                            OSMmap.setExtent(ext_);
+                            OSMmap.setExtent(event.extent);
                         }
                         if (Tiandimap) {
-                            Tiandimap.setExtent(ext_);
+                            Tiandimap.setExtent(event.extent);
                         }
                     }
 
                 });
-
-                Satellitemap.addEventListener("moveend", function(event) {
-                    if (a == 1) {
-                        var bds = this.getBounds();
-                        var ext_ = new Extent(bds.getSouthWest().lng, bds.getSouthWest().lat, bds.getNorthEast().lng, bds.getNorthEast().lat, new SpatialReference(4326));
-                        if (Gaodemap) {
-                            Gaodemap.setExtent(ext_);
-                        }
-                        if (OSMmap) {
-                            OSMmap.setExtent(ext_);
-                        }
-                        if (Tiandimap) {
-                            Tiandimap.setExtent(ext_);
-                        }
-                    }
-
-                });
-
 
                 Gaodemap.on("extent-change", function(event) {
                     if (b == 1) {
                         if (Satellitemap) {
-
-                            var geoExt = webMercatorUtils.webMercatorToGeographic(event.extent);
-                            var point = new BMap.Point(geoExt.getCenter().x, geoExt.getCenter().y);
-                            Satellitemap.centerAndZoom(point, this.getLevel() + 1); //GAODE是 Zoom +1 
+                            Satellitemap.setExtent(event.extent);
                         }
                         if (OSMmap) {
                             OSMmap.setExtent(event.extent);
@@ -233,9 +208,7 @@
                 OSMmap.on("extent-change", function(event) {
                     if (c == 1) {
                         if (Satellitemap) {
-                            var geoExt = webMercatorUtils.webMercatorToGeographic(event.extent);
-                            var point = new BMap.Point(geoExt.getCenter().x, geoExt.getCenter().y);
-                            Satellitemap.centerAndZoom(point, this.getLevel() + 1); //OSM是 Zoom +1 
+                            Satellitemap.setExtent(event.extent);
                         }
                         if (Gaodemap) {
                             Gaodemap.setExtent(event.extent);
@@ -250,9 +223,7 @@
                 Tiandimap.on("extent-change", function(event) {
                     if (d == 1) {
                         if (Satellitemap) {
-                            var geoExt = event.extent;
-                            var point = new BMap.Point(geoExt.getCenter().x, geoExt.getCenter().y);
-                            Satellitemap.centerAndZoom(point, this.getLevel() + 2); //天地图是Zoom +2 
+                            Satellitemap.setExtent(event.extent);
                         }
                         if (Gaodemap) {
                             Gaodemap.setExtent(event.extent);
@@ -263,45 +234,38 @@
                     }
 
                 });
-
+  
 
 
             });
-
-        //高德地图查询 	
-        geomap = new AMap.Map("geomap", {
-            resizeEnable: true
+             
+//      if(check==1){}    
+    	function geocoder() {
+        var geocoder = new AMap.Geocoder({
+            radius: 1000 //范围，默认：500
         });
-        //      if(check==1){}    
-        function geocoder() {
-            var geocoder = new AMap.Geocoder({
-                radius: 1000 //范围，默认：500
-            });
-            var address = document.getElementById('keyWords').value;
-            //地理编码,返回地理编码结果
-            geocoder.getLocation(address, function(status, result) {
-                if (status === 'complete' && result.info === 'OK') {
-                    geocoder_CallBack(result);
-                }
-            });
-        }
-        //地理编码返回结果展示
-        function geocoder_CallBack(data) {
-            //地理编码结果数组
-            var geocode = data.geocodes;
-            if(geocode.length>0)
-            {
-                longitude = geocode[0].location.getLng();
-                latitude = geocode[0].location.getLat();    
+        var address=document.getElementById('keyWords').value;;
+        //地理编码,返回地理编码结果
+        geocoder.getLocation(address, function(status, result) {
+            if (status === 'complete' && result.info === 'OK') {
+                geocoder_CallBack(result);
             }
-            for (var i = 0; i < geocode.length; i++) {
-                //拼接输出html
-                
-            }
-            //geomap.setZoomAndCenter(15, [longitude, latitude]);
-            //level = geomap.getZoom();
-            Gaodemap.centerAndZoom([longitude, latitude], 15);
-        }
+        });
+   		}
+   			 //地理编码返回结果展示
+		function geocoder_CallBack(data) {
+		        //地理编码结果数组
+		        var geocode = data.geocodes;
+		        for (var i = 0; i < geocode.length; i++) {
+		            //拼接输出html
+		            longitude=geocode[i].location.getLng();
+		            latitude=geocode[i].location.getLat();
+		        }
+		   	    geomap.setZoomAndCenter(15, [longitude, latitude]);
+		        level=geomap.getZoom();
+		        Gaodemap.centerAndZoom([longitude,latitude],15);
+		}
+
     </script>
     <div class="container" style="position: absolute;top: 0;bottom: 0; padding: 5px;margin: 0;">
 
@@ -328,7 +292,7 @@
             </div>
             <div class="col-md-1" style="top:50%;transform: translate(0,-50%);padding-left: 0;padding-right: 0">
 
-                <button id="btnQuery" type="button" class="btn btn-primary" style="width: 100%">查询验证</button>
+                <button id="btnQuery" type="button" class="btn btn-primary" style="width: 100%"  >查询验证</button>
 
             </div>
 
@@ -339,16 +303,14 @@
 
             <div class="col-md-6" style="height: 100%;padding: 0;margin: 0">
                 <!--地图Div1-->
-                <div id="Baidumap" style="width: 100%; height: 90%;padding: 0;margin: 0;border-radius: 4px;"></div>
-                
-                <div style="width: 100%; height: 10%;padding: 0;margin: 0;bottom: 0;text-align: center"><h5>百度地图</h5> </div>
+                <div id="Baidumap" style="width: 100%; height: 100%;padding: 0;margin: 0;border-radius: 4px;"></div>
+
             </div>
 
             <div class="col-md-6" style="height: 100%;margin: 0;padding-left: 5px; padding-right: 0px">
                 <!--地图Div2-->
-                <div id="Gaodemap" style="width: 100%; height: 90%;padding: 0;margin: 0;border-radius: 4px;"></div>
-                <div id="geomap" style="width:1px; height: 1px;padding: 0;margin: 0;border-radius: 0px;"></div>
-                <div style="width: 100%; height: 10%;padding: 0;margin: 0;bottom: 0;text-align: center"><h5>高德地图</h5> </div>
+               <div id="Gaodemap" style="width: 100%; height: 100%;padding: 0;margin: 0;border-radius: 4px;"></div>
+               <div id="geomap" style="width:1px; height: 1px;padding: 0;margin: 0;border-radius: 0px;"></div>
             </div>
 
         </div>
@@ -358,15 +320,13 @@
             <div class="col-md-6" style="height: 100%;padding: 0;margin: 0">
 
                 <!--地图Div3-->
-                <div id="OSMmap" style="width: 100%; height: 90%;padding: 0;margin: 0;border-radius: 4px;"></div>
-                <div style="width: 100%; height: 10%;padding: 0;margin: 0;bottom: 0;text-align: center"><h5>OpenStreetMap</h5> </div>
+                <div id="OSMmap" style="width: 100%; height: 100%;padding: 0;margin: 0;border-radius: 4px;"></div>
 
             </div>
 
             <div class="col-md-6" style="height: 100%;margin: 0;padding-left: 5px; padding-right: 0px">
                 <!--地图Div4-->
-                <div id="Tiandimap" style="width: 100%; height: 90%;padding: 0;margin: 0;border-radius: 4px;"></div>
-                <div style="width: 100%; height: 10%;padding: 0;margin: 0;bottom: 0;text-align: center"><h5>天地图</h5> </div>
+                <div id="Tiandimap" style="width: 100%; height: 100%;padding: 0;margin: 0;border-radius: 4px;"></div>
             </div>
 
         </div>
