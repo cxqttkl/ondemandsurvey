@@ -12,7 +12,6 @@
 
 
 
-
      require(["esri/map",
       "esri/layers/FeatureLayer",
       "esri/dijit/FeatureTable",
@@ -35,6 +34,8 @@
       "dijit/layout/BorderContainer",
       "dijit/form/TextBox"], function (Map, FeatureLayer, FeatureTable, CSVLayer, Color, SimpleMarkerSymbol, SimpleRenderer, ScaleDependentRenderer,HeatmapRenderer,InfoTemplate, esriConfig, domConstruct, dom, parser, ready, on, lang, registry, Button, ContentPane, BorderContainer, TextBox) {
 
+         $("#btnCheck").click(function(){window.location.href="check.html";});
+         
          map = new Map("mapDiv", {
              center: [120.71, 28.02],
              zoom: zoom,

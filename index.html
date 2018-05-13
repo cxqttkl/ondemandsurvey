@@ -1,127 +1,100 @@
-<!DOCTYPE html>
-<html>
+<!DOCTYPE html>  
+<html>  
+  
+    <head>  
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+	<style type="text/css">
+		body, html {width: 100%;height: 100%;margin:0;font-family:"微软雅黑";}
 
-<head>
-    <title>基于多源大数据的省级基础测绘要素变化探测系统</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- 引入 Bootstrap -->
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://js.arcgis.com/3.24/dijit/themes/claro/claro.css">
-    <link rel="stylesheet" href="https://js.arcgis.com/3.24/esri/css/esri.css">
-    <!-- HTML5 Shiv 和 Respond.js 用于让 IE8 支持 HTML5元素和媒体查询 -->
-    <!-- 注意： 如果通过 file://  引入 Respond.js 文件，则该文件无法起效果 -->
-    <!--[if lt IE 9]>
-         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-         <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
-      <![endif]-->
+#header {
+    background-color:rgb(150,130,150);
+    color:white;
+    text-align:center;
+    padding:5px;
+}
+#nav1 {
+    line-height:30px;
+    background-color:#eeeeee;
+    height:500px;
+    width:10%;
+    float:left;
+    padding:5px;	      
+}
+#nav2 {
+    line-height:30px;
+    background-color:#eeeeee;
+    height:500px;
+    width:10%;
+    float:right;
+    padding:5px;	      
+}
+#section {
+    height:500px;
+    width:80%;
+    float:left;
+    padding:10px;	 	 
+}
+#footer {
+    background-color:rgb(150,130,150);
+    color:white;
+    clear:both;
+    text-align:center;
+   padding:5px;	 	 
+}
+</style>
 
-    <style>
-        body {
-            width: 100%;
-            height: 100%;
-        }
+	<title>基于多源大数据的浙江省基础测绘要素变化探测分析系统</title> 
+        <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.0/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://qqq807111690.github.io/web4gis15/bootstrap-table.min.css"> 
+        <link rel="stylesheet" href="https://js.arcgis.com/3.24/esri/css/esri.css">		
+        <!-- <link rel="stylesheet" href="bootstrap_table/css/bootstrap-editable.css">   -->
+        <script src="https://cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script>
+        <script src="https://cdn.bootcss.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+        <!-- <script src="bootstrap_table/js/vue.min.js"></script>   -->
+        <!-- <script src="https://qqq807111690.github.io/web4gis15//bootstrap-table.min.js"></script>   -->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.12.1/bootstrap-table.min.js"></script>
+		 <script src="https://js.arcgis.com/3.24/"></script>
+        <!-- <script src="bootstrap_table/js/bootstrap-editable.js"></script>   -->
+        <!-- <script src="bootstrap_table/js/bootstrap-table-editable.js"></script>   -->
+        <!-- <meta charset="UTF-8">   -->
+		<meta charset="UTF-8"> 
+         
+    </head>  
+  
+    <body>  
+	<div id="header">
+<h1>基于多源大数据的浙江省基础测绘要素变化探测分析系统</h1>
+</div>
 
-        .container {
-            width: 100%;
-
-        }
-
-        .links line {
-            stroke: #999;
-            stroke-opacity: 0.6;
-        }
-
-        .nodes circle {
-            stroke: #fff;
-            stroke-width: 1.5px;
-        }
-
-        div.highlight {
-            font-family: 微软雅黑;
-            font-size: 15px;
-            font-weight: bold;
-            padding: 5px;
-
-        }
-    </style>
-    <!-- jQuery (Bootstrap 的 JavaScript 插件需要引入 jQuery) -->
-    <script src="https://code.jquery.com/jquery.js"></script>
-    <!-- 包括所有已编译的插件 -->
-    <script src="js/echarts.min.js"></script>
-
-
-
-
-
-
-</head>
-
-
-<body class="claro esri" onload="loadmap()">
-
-    <script src="js/bootstrap.min.js"></script>
-    <script src="https://js.arcgis.com/3.24/"></script>
-    <script src="js/map.js" type="text/javascript"></script>
-    <script src="js/d3.js" type="text/javascript"></script>
-
-    <div class="container" style="position: absolute;top: 0;bottom: 0; padding: 5px;margin: 0; background-color:white">
-
-        <h3 style="position: absolute;left:10px; margin: 0; z-index: 10000; font-family: 黑体; color: white; padding: 10px; background-color: rgba(50,50,50,0.6); border-radius: 4px">基于多源大数据的浙江省基础测绘要素变化探测系统 <sub>测试</sub>
-
-        </h3>
-
-
-
-        <div id="content" class="row-fluid" style="height: 100%;padding: 0;margin: 0">
-
-            <div id="maparea" class="col-md-6" style="height: 100%;padding: 0;margin: 0">
-
-                <!--主要的地图Div-->
-                <div id="mapDiv" style="width: 100%; height: 100%;padding: 0;margin: 0;border-radius: 4px"></div>
-
-            </div>
-
-            <div id="infoarea" class="col-md-6" style="height: 100%;margin: 0;padding-left: 5px; padding-right: 0px">
-                <!--查询信息Div -->
-                <div id="queryarea" class="row-fluid" style="width: 100%; height: 15%;padding: 10px;margin: 0;background-color:aliceblue;border-radius: 4px">
-
-                    <div class="row-fluid" style="width: 100%; height: 30%;padding: 0;margin: 0;">
-
-                        <div class="col-md-12" style="top:50%;transform: translate(0,-50%);padding-left: 0;padding-right: 0">
-                            <div class="alert alert-success highlight" style="margin: 0"> 截止<span id="currentDate"></span>，共探测到地理要素变化线索<span id="clueNum"></span> 条，发现变化地理要素<span id="ChangeNum"></span> 个。</div>
-                        </div>
-
-                    </div>
-
-
-                    <div class="row-fluid" style="width: 100%; height: 70%;padding: 0px;margin: 0">
-
-
-                        <div class="col-md-3" style="top:50%;transform: translate(0,-50%);padding-left: 0">
-                            <div class="form-group" style="margin: 0">
-                                <label for="keyWords">名称关键字：</label>
-                                <input type="text" class="form-control" id="keyWords">
-                            </div>
-
-                        </div>
-                        <div class="col-md-2" style="top:50%;transform: translate(0,-50%);padding-left: 0">
-                            <div class="form-group" style="margin: 0">
-                                <label for="featureType">要素类型：</label>
-                                <select class="form-control" id="featureType">
-                                  <option>公路交通</option>
-                                  <option>水利设施</option>
-                                  <option>建筑用地</option>
-                                  <option>轨道交通</option>
-                                  <option>重要地物</option>
-                                </select>
-                            </div>
-
-                        </div>
-                        <div class="col-md-2" style="top:50%;transform: translate(0,-50%);padding-left: 0">
-                            <div class="form-group" style="margin: 0">
-                                <label for="locationArea">所属地区：</label>
-                                <select class="form-control" id="locationArea">
-                                  <option>杭州</option>
+<div id="nav1">
+     <img src="image/search1.jpg" height="80px" width="120px"/> 
+    <input type="button" style="background:rgb(162,205,90)" id="btnhtml1" value="详细探测结果" onclick="window.location.href='result.html'"/>
+    <br><br>
+     <img src="image/vis.jpg" height="80px" width="120px"/> 
+    <input type="button" style="background:rgb(162,205,90)" id="btnhtml2" value="多源大数据列表" onclick="window.location.href='data.html'"/><br><br>
+     <img src="image/zj.jpg" height="80px" width="120px"/> 
+    <input type="button" style="background:rgb(162,205,90)" id="btnhtml2" value="要素变化探测原理" onclick="window.location.href='method.html'"/><br><br>
+</div>
+<div id="nav2">
+    要素类别：<br>
+            <select id="selectstyle">
+					<option value="0">建筑物</option>
+					<option value="1">道路</option>
+					
+            </select>
+            <br>
+    更新要求：<br>
+            <select id="selectstyle">
+					<option value="0">三个月</option>
+					<option value="1">六个月</option>
+					<option value="2">一年</option>
+					
+            </select> 
+            <br>
+     地区：<br>
+            <select id="selectstyle">
+					 <option>杭州</option>
                                   <option>宁波</option>
                                   <option>温州</option>
                                   <option>绍兴</option>
@@ -132,75 +105,173 @@
                                     <option>台州</option>
                                     <option>丽水</option>
                                     <option>舟山</option>
-                                    
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-md-2" style="top:50%;transform: translate(0,-50%);padding-left: 0">
-                            <div class="form-group" style="margin: 0">
-                                <label for="updateTime">更新周期：</label>
-                                <select class="form-control" id="updateTime">
-                                  <option>三个月</option>
-                                  <option>六个月</option>
-                                  <option>一年</option>
-                                  <option>三年</option> 
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-md-3" style="top:50%;transform: translate(0,-50%);padding-left: 0;padding-right: 0">
-
-                            <button id="btnQuery" type="button" class="btn btn-primary" style="width: 100%">结果筛选</button>
-
-                        </div>
-                    </div>
-
-                </div>
-
-                <!--变化要素列表Div -->
-                <div id="listarea" class="row-fluid" style="width: 100%; height: 50%; padding-top: 5px; padding-bottom: 5px ;margin: 0;border-radius: 4px ">
-                   
-
-                    
-                    <div id="tablelist" class="col-md-8" style="padding-left: 5px; padding-right:5px;height: 100%">
-                        
-                        <div id="bot" data-dojo-type="dijit/layout/ContentPane" style="width: 100%;height: 100%;">
-                            <div id="myTableNode"></div>
-                        </div>
-
-                    </div>
-                    
-                    <div id="cluepanel" class="col-md-4" style="padding: 0; height: 100%">
-                        <div id="echart_clues" style="width:100%;height: 100%"></div>
-
-                    </div>
-
-
-                </div>
-
-                <!--要素总览infographicsDiv -->
-                <div id="graphicsarea" class="row-fluid" style="width: 100%; height: 35%;margin: 0;border-radius: 4px">
-
-                    <div class="col-md-4" style="padding: 0; height:100%;background-color:aliceblue">
-                        <div id="echart_map" style="width: 100%;height: 100%"></div>
-                    </div>
-
-
-                    <div class="col-md-4" style="padding-left: 5px; padding-right:5px;height: 100%;">
-                        <div id="echart_trend" style="width: 100%;height: 100%"></div>
-                    </div>
-
-
-
-                    <div class="col-md-4" style="padding: 0; height:100%;background-color:aliceblue">
-                        <div id="echart_category" style="width: 100%;height: 100%"></div>
-                    </div>
-                </div>
-
-            </div>
-
-        </div>
-
-    </div>
-</body>
-
-</html>
+            </select> 
+            <br><br>
+            <input type="button" id="btnhtml3" value="相关数据" onclick=""/>
+</div>
+        <!-- <div class="container-fluid">  -->
+			<!-- <font size="5" color="black">新闻数据：</font> -->
+            <!-- <div class="row" id = "mytable">   -->
+			<div id="section">
+	
+                <table id="test-table"></table> 
+</div>				
+            <!-- </div>   -->
+        <!-- </div>  -->
+    </body>  
+    <script>  
+        $("#test-table").bootstrapTable(testFunc());  
+  
+        function testFunc(value) {  
+            var test = {  
+                toolbar: '#btn-action', //工具按钮用哪个容器  
+                striped: true, //设置为 true 会有隔行变色效果  
+                pagination: true, //设置为 true 会在表格底部显示分页条  
+                paginationLoop: false, //设置为 true 启用分页条无限循环的功能。无效果  
+                pageSize: 10, //如果设置了分页，页面数据条数  
+                cache: true,  
+                search: true, //是否启用搜索框  
+                //          showToggle:true, //是否显示 切换试图（table/card）按钮  
+                showPaginationSwitch: false, //是否显示 数据条数选择框。无效果  
+                //          checkboxHeader:true, //设置false 将在列头隐藏check-all checkbox .  
+                uniqueId: "id",  
+                //          searchText:"搜索", //初始化搜索文字  
+                selectItemName: "id",  
+                //          showHeader:true, //是否显示列头  
+                //          showFooter:false,//是否显示列脚  
+                showRefresh: true, //是否显示 刷新按钮  
+                showColumns: true, //是否显示 内容列下拉框  
+                //          sortable: true,      //是否启用排序  
+                sortOrder: "asc", //排序方式  
+                sortName: "id", //需要排序的字段  
+  
+                //          clickToSelect:false,//设置true 将在点击行时，自动选择rediobox 和 checkbox  
+                columns: [{  
+                        field: 'id',  
+                        title: 'ID',  
+                        sortable: true,  
+				        halign:"center",
+						valign:"middle",
+						<!-- rowspan: 2, -->
+                        formatter: function(val, row, index) {  
+                            return index + 1;  
+                        }  
+                    }, {  
+                        field: 'a',  
+                        title: '变化名称',
+						halign:"center",
+						valign:"middle",
+						width: '200px',
+						<!-- rowspan: 2 -->
+						
+						
+                    },  
+                    {  
+                        field: 'b',  
+                        title: '变化阶段',
+                      	halign:"center",
+						valign:"middle",
+					    width: '110px',	
+                        <!-- rowspan: 2					 -->
+                    },  
+					{  
+                        field: 'c',  
+                        title: '要素类型' ,
+						halign:"center",
+						valign:"middle",
+						width: '150px',	
+						<!-- rowspan: 2 -->
+                        				
+                    }, 
+					{  
+                        field: 'd',  
+                        title: '变化置信度',
+                       	width: '110px',	
+                        halign:"center",	
+                        <!-- align:	"center", -->
+                        <!-- falign:	"center",	 -->
+                        valign:"middle"						
+                    }, 
+					{  
+                        field: 'e',  
+                        title: '发现变化时间',
+						halign:"center",
+						valign:"middle"
+                    }, 
+							{  
+                        field: 'f',  
+                        title: '是否需要测绘',
+						halign:"center",
+						valign:"middle"
+                    }, 
+							{  
+                        field: 'g',  
+                        title: '3613规则',
+						halign:"center",
+						valign:"middle"
+                    }, 
+							{  
+                        field: 'h',  
+                        title: '要素地址',
+						halign:"center",
+						valign:"middle"
+                    }, 
+							{  
+                        field: 'i',  
+                        title: '线索信息',
+						halign:"center",
+						valign:"middle"
+                    },
+                ],  
+            }  
+            return test;  
+        };  
+		<!-- $("#upload-btn").click(function() {   -->
+		<!-- var data = []; -->
+        var data = [];  
+            <!-- var files = document.getElementById("file-value").files;   -->
+            <!-- var regp = new RegExp(".*,\".*,.*\"$");  -->
+			<!-- var file = files[0];   -->
+  
+                <!-- var reader = new FileReader(); -->
+				 <!-- reader.readAsText(file);   -->
+                <!-- reader.onload = function(f) {  -->
+				<!-- var relArr = this.result.split("\r\n");   -->
+		$.get("https://qqq807111690.github.io/web4gis15/all.csv",null,function(result){  
+                <!-- reader.onload = function(f) {   -->
+                    //                  var result = document.getElementById("result");  
+                    //显示文件 
+                    var relArr = result.split(/\n/);  
+                    if(!$.isEmptyObject(relArr) && relArr.length > 1) {  
+                        for(var key = 1, len = relArr.length; key < len; key++) {  
+                            var values = relArr[key];  
+                            <!-- if(regp.test(values)) {   -->
+                                <!-- alert("文件内容中有英文逗号，麻烦修改后再上传，含有英文逗号的内容是：" + values);   -->
+                                <!-- return;   -->
+                            <!-- }   -->
+                            if(!$.isEmptyObject(values)) {  
+                                var obj = {};  
+                                var objArr = values.split(",");  
+                                obj["a"] = objArr[0];  
+                                obj["b"] = objArr[1]; 
+								obj["c"] = objArr[2]; 
+								obj["d"] = objArr[3]; 
+								obj["e"] = objArr[4]; 
+								obj["f"] = objArr[5]; 
+								obj["g"] = objArr[6]; 
+								obj["h"] = objArr[7];
+								obj["i"] = objArr[8];
+								
+                                data.push(obj);  
+                            }  
+                        }  
+  
+                    }  
+                    console.log(data);  
+                    $("#test-table").bootstrapTable("load", data);  
+					})
+              <!-- }) -->
+			  
+    </script>  
+  
+</html>  
