@@ -17,7 +17,7 @@
     line-height:30px;
     background-color:#eeeeee;
     height:500px;
-    width:10%;
+    width:12%;
     float:left;
     padding:5px;	      
 }
@@ -31,7 +31,7 @@
 }
 #section {
     height:500px;
-    width:80%;
+    width:78%;
     float:left;
     padding:10px;	 	 
 }
@@ -44,16 +44,19 @@
 }
 </style>
 
-	<title>基于多源大数据的浙江省基础测绘要素变化探测分析系统</title> 
+	<title>基于多源大数据的浙江省基础测绘要素变化探测分析系统（原型）</title> 
         <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.0/css/bootstrap.min.css">
         <link rel="stylesheet" href="https://qqq807111690.github.io/web4gis15/bootstrap-table.min.css"> 
         <link rel="stylesheet" href="https://js.arcgis.com/3.24/esri/css/esri.css">		
         <!-- <link rel="stylesheet" href="bootstrap_table/css/bootstrap-editable.css">   -->
         <script src="https://cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script>
         <script src="https://cdn.bootcss.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+        
         <!-- <script src="bootstrap_table/js/vue.min.js"></script>   -->
         <!-- <script src="https://qqq807111690.github.io/web4gis15//bootstrap-table.min.js"></script>   -->
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.12.1/bootstrap-table.min.js"></script>
+        <!-- Latest compiled and minified Locales -->
+        <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.12.1/locale/bootstrap-table-zh-CN.min.js"></script>
 		 <script src="https://js.arcgis.com/3.24/"></script>
         <!-- <script src="bootstrap_table/js/bootstrap-editable.js"></script>   -->
         <!-- <script src="bootstrap_table/js/bootstrap-table-editable.js"></script>   -->
@@ -64,7 +67,7 @@
   
     <body>  
 	<div id="header">
-<h1>基于多源大数据的浙江省基础测绘要素变化探测分析系统</h1>
+<h1>基于多源大数据的浙江省基础测绘要素变化探测分析系统（原型）</h1>
 </div>
 
 <div id="nav1">
@@ -123,6 +126,7 @@
         <!-- </div>  -->
     </body>  
     <script>  
+        $.extend($.fn.bootstrapTable.defaults, $.fn.bootstrapTable.locales['zh-CN']);
         $("#test-table").bootstrapTable(testFunc());  
   
         function testFunc(value) {  

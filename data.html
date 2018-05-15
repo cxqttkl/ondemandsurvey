@@ -23,6 +23,7 @@
         <!-- <script src="bootstrap_table/js/vue.min.js"></script>   -->
         <!-- <script src="https://qqq807111690.github.io/web4gis15//bootstrap-table.min.js"></script>   -->
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.12.1/bootstrap-table.min.js"></script>
+         <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.12.1/locale/bootstrap-table-zh-CN.min.js"></script>
 		 <script src="https://js.arcgis.com/3.24/"></script>
         <!-- <script src="bootstrap_table/js/bootstrap-editable.js"></script>   -->
         <!-- <script src="bootstrap_table/js/bootstrap-table-editable.js"></script>   -->
@@ -34,7 +35,7 @@
     <body>  
 	 <fieldset>
 	 <!-- <legend color="red">百度地图数据展示：</legend> -->
-	<font size="5" color="black" >  百度地图数据：</font>
+	<font size="5" color="black" >  网络地图数据：</font>
     <div id="allmap"></div>
 	<!-- <p>底图样式可通过<a href='/custom/' target="_blank">个性化在线编辑器</a>编辑获取</p> -->
 	<button class="btn btn-success" id="qhmap" onclick="theLocation()">道路抓取</button>  
@@ -224,6 +225,8 @@
 		function theLocation2(){
 		map.setMapStyle({styleJson:styleJson2});
 	}
+        
+        $.extend($.fn.bootstrapTable.defaults, $.fn.bootstrapTable.locales['zh-CN']);
         $("#test-table").bootstrapTable(testFunc());  
   
         function testFunc(value) {  

@@ -7,7 +7,8 @@
     <!-- 引入 Bootstrap -->
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.12.1/bootstrap-table.min.css"> 
-
+    <!-- Latest compiled and minified Locales -->
+    <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.12.1/locale/bootstrap-table-zh-CN.min.js"></script>
     <link rel="stylesheet" href="https://js.arcgis.com/3.24/dijit/themes/claro/claro.css">
     <link rel="stylesheet" href="https://js.arcgis.com/3.24/esri/css/esri.css">
     <!-- HTML5 Shiv 和 Respond.js 用于让 IE8 支持 HTML5元素和媒体查询 -->
@@ -113,6 +114,7 @@
     </div>
 </body>
 <script>
+    $.extend($.fn.bootstrapTable.defaults, $.fn.bootstrapTable.locales['zh-CN']);
     $("#test-table").bootstrapTable(testFunc());
 
     function testFunc(value) {
