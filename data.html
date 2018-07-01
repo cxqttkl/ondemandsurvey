@@ -312,38 +312,45 @@
             return test;  
         };  
 		var data = [];
-      
-		$.get("https://qqq807111690.github.io/web4gis15/aa2.csv",null,function(result){  
-                <!-- reader.onload = function(f) {   -->
-                    //                  var result = document.getElementById("result");  
+        
+        $.get("http://127.0.0.1:5000/querynews",null,function(result_, status_){
+           if(status_=="success")
+           {
+               if(result_ !=null){
+
+                   $.get("http://127.0.0.1:5000/getcsv/"+result_,null,function(result){  
+                  
                     //显示文件 
                     var relArr = result.split(/\n/);  
                     if(!$.isEmptyObject(relArr) && relArr.length > 1) {  
                         for(var key = 1, len = relArr.length; key < len; key++) {  
                             var values = relArr[key];  
-                            <!-- if(regp.test(values)) {   -->
-                                <!-- alert("文件内容中有英文逗号，麻烦修改后再上传，含有英文逗号的内容是：" + values);   -->
-                                <!-- return;   -->
-                            <!-- }   -->
                             if(!$.isEmptyObject(values)) {  
                                 var obj = {};  
                                 var objArr = values.split(",");  
                                 obj["title"] = objArr[0];  
                                 obj["time"] = objArr[1]; 
 								obj["origin"] = objArr[2]; 
-								obj["author"] = objArr[3]; 
-								obj["article"] = objArr[4]; 
+								//obj["author"] = objArr[3]; 
+								//obj["article"] = objArr[4]; 
                                 data.push(obj);  
                             }  
                         }  
   
                     }  
-                    console.log(data);  
-                    $("#test-table").bootstrapTable("load", data);  
-                <!-- }   -->
-              })
+                        $("#test-table").bootstrapTable("load", data);  
+                    })
+               }
+           }
+            
+            
+        });
+      
+        
+		
+                
+        
      var osmmap;
-       
       require(["esri/map", "dojo/domReady!"], function(Map) {
         osmmap = new Map("map", {
           basemap: "osm",  //For full list of pre-defined basemaps, navigate to http://arcg.is/1JVo6Wd

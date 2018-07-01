@@ -4,6 +4,7 @@
 <head>
     <title>基于多源大数据的浙江省基础测绘要素变化探测分析系统</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
     <!-- 引入 Bootstrap -->
     <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.12.1/bootstrap-table.min.css">
@@ -109,7 +110,7 @@
 
             <!--弹出结果对话框-->
             <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                <div class="modal-dialog" style="width: 800px">
+                <div class="modal-dialog" style="width: 1000px">
                     <div class="modal-content">
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
@@ -122,7 +123,7 @@
                         <div class="modal-body">
 
                             <div style="height:400px;overflow:auto; ">
-                                <table id=""></table>
+                                <table id="news_result"></table>
                             </div>
                         </div>
                         <div class="modal-footer">
@@ -135,6 +136,15 @@
                     </div>
                 </div>
             </div>
+            <!--等待对话框-->
+            <div class="modal fade" id="loadingModal">
+                <div style="width: 400px;height:20px; z-index: 20000; position: absolute; text-align: center; left: 50%; top: 50%;margin-left:-100px;margin-top:-10px">
+                    <div class="progress progress-striped active" style="margin-bottom: 0;">
+                        <div class="progress-bar" style="width: 100%;"></div>
+                    </div>
+                    <h5 style="color:white"> <strong>正在处理新闻数据，请稍等...</strong> </h5>
+                </div>
+            </div>
 
         </div>
 
@@ -142,10 +152,33 @@
 </body>
 <script>
     var current_csv="";
-    
+    var tableconfig = {
+        toolbar: '#btn-action', //工具按钮用哪个容器
+        striped: true, //设置为 true 会有隔行变色效果
+        pagination: true, //设置为 true 会在表格底部显示分页条
+        paginationLoop: false, //设置为 true 启用分页条无限循环的功能。无效果
+        pageSize: 10, //如果设置了分页，页面数据条数
+        cache: true,
+        search: true, //是否启用搜索框
+        //showToggle:true, //是否显示 切换试图（table/card）按钮
+        showPaginationSwitch: false, //是否显示 数据条数选择框。无效果
+        //checkboxHeader:true, //设置false 将在列头隐藏check-all checkbox .
+        uniqueId: "id",
+        //searchText:"搜索", //初始化搜索文字
+        selectItemName: "id",
+        //showHeader:true, //是否显示列头
+        //showFooter:false,//是否显示列脚
+        showRefresh: true, //是否显示 刷新按钮
+        showColumns: true, //是否显示 内容列下拉框
+        //sortable: true,      //是否启用排序
+        sortOrder: "asc", //排序方式
+        sortName: "id" //需要排序的字段
+    }
     
     $.extend($.fn.bootstrapTable.defaults, $.fn.bootstrapTable.locales['zh-CN']);
+    //init the table
     $("#test-table").bootstrapTable(testFunc());
+
 
     //点击筛选按钮
     $("#btnQuery").click(function(e) {
@@ -156,6 +189,7 @@
                     if(result['number'] > 0){
                         $('#clueNum').text(result['number']);
                         current_csv=result['filename'];
+
                         putscv2table("http://127.0.0.1:5000/getcsv/"+result['filename'],"test-table");
                     }
                     else{
@@ -169,16 +203,26 @@
     //点击处理新闻按钮
      $("#btnCheck").click(function(){
          if(current_csv.length>0){
+             $('#loadingModal').modal('show');
              $.get("http://127.0.0.1:5000/analysis/"+current_csv,null,function(result){
+                 $('#loadingModal').modal('hide');
                   if(!$.isEmptyObject(result) & 'success' in result){
                       if(result['success']){
-                          alert(result['path']);
+                          putscv2table("http://127.0.0.1:5000/getcsv/"+result['path'],"news_result");
+                          $('#myModal').modal('show');
                       }
+                      else{
+                          alert('新闻数据处理失败！');
+                      }
+
                       
+                  }else{
+                      alert('未返回正确结果,新闻数据处理失败！');
                   }
              });
          }
      });
+
 
     function testFunc(value) {
         var test = {
@@ -245,20 +289,13 @@
                 },
                 {
                     field: 'd',
-                    title: '地区',
+                    title: '来源',
                     width: '110px',
                     halign: "center",
                     <!-- align:	"center", -->
                     <!-- falign:	"center",	 -->
                     valign: "middle"
-                },
-                {
-                    field: 'e',
-                    title: '类型',
-                    halign: "center",
-                    valign: "middle"
                 }
-
             ],
         }
         return test;
@@ -279,10 +316,7 @@
                     obj["a"] = objArr[0];
                     obj["b"] = objArr[1];
                     obj["c"] = objArr[2];
-                    //obj["d"] = objArr[3];
-                    //obj["e"] = objArr[4];
-
-
+                    obj["d"] = objArr[3];
                     data.push(obj);
                 }
             }
@@ -295,24 +329,41 @@
         var data = [];
         $.get(csvurl, null, function(result) {
             var relArr = result.split(/\n/);
+            //首先提取字段信息
+            var fieldsinfo = relArr[0].split(",");
+            var fields = [];
+            fields.push({'field':'id','title':'ID'});
+            for(var i=0;i<fieldsinfo.length;i++){
+                var field = {}
+                field["field"] = "a_"+i.toString();
+                field["title"] = fieldsinfo[i];
+                fields.push(field);
+            }
+            tableconfig['columns']=fields;
+
+            $("#"+table_div).bootstrapTable('destroy');
+            $("#"+table_div).bootstrapTable(tableconfig);
+
             if (!$.isEmptyObject(relArr) && relArr.length > 1) {
                 for (var key = 1, len = relArr.length; key < len; key++) {
                     var values = relArr[key];
                     if (!$.isEmptyObject(values)) {
                         var obj = {};
                         var objArr = values.split(",");
-                        obj["a"] = objArr[0];
-                        obj["b"] = objArr[1];
-                        obj["c"] = objArr[2];
-                        //obj["d"] = objArr[3];
-                        //obj["e"] = objArr[4];
+
+                        obj['id']= key;
+                        for(var i=0;i<objArr.length;i++){
+                            obj["a_"+i.toString()] = objArr[i];
+
+                        }
+
                         data.push(obj);
                     }
                 }
 
             }
             $("#"+table_div).bootstrapTable("load", data);
-        })
+        });
 
     }
 </script>
