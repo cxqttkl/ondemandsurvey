@@ -182,13 +182,13 @@
     $("#btnQuery").click(function(e) {
         var str = $("#keyWords").val();
         if (!$.isEmptyObject(str)) {
-            $.get("http://115.236.34.34:8090/querynews/"+str,null,function(result){
+            $.get("https://115.236.34.34:8090/querynews/"+str,null,function(result){
                 if(!$.isEmptyObject(result) & 'number' in result){
                     if(result['number'] > 0){
                         $('#clueNum').text(result['number']);
                         current_csv=result['filename'];
 
-                        putscv2table("http://115.236.34.34:8090/getcsv/"+result['filename'],"test-table");
+                        putscv2table("https://115.236.34.34:8090/getcsv/"+result['filename'],"test-table");
                     }
                     else{
                         $('#clueNum').text('0');
@@ -202,11 +202,11 @@
      $("#btnCheck").click(function(){
          if(current_csv.length>0){
              $('#loadingModal').modal('show');
-             $.get("http://115.236.34.34:8090/analysis/"+current_csv,null,function(result){
+             $.get("https://115.236.34.34:8090/analysis/"+current_csv,null,function(result){
                  $('#loadingModal').modal('hide');
                   if(!$.isEmptyObject(result) & 'success' in result){
                       if(result['success']){
-                          putscv2table("http://115.236.34.34:8090/getcsv/"+result['path'],"news_result");
+                          putscv2table("https://115.236.34.34:8090/getcsv/"+result['path'],"news_result");
                           $('#myModal').modal('show');
                       }
                       else{
@@ -300,7 +300,7 @@
     };
 
     var data = [];
-    $.get("http://115.236.34.34:8090/allnews", null, function(result) {
+    $.get("https://115.236.34.34:8090/allnews", null, function(result) {
 
         //var relArr = result.split(/\n/);
         var relArr = result;
