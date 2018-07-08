@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="faa4117b-c5ff-4447-a299-83683b8e706e" name="Default" comment="增加了进行新闻数据在线分析的页面">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change beforePath="$PROJECT_DIR$/analysis.html" afterPath="$PROJECT_DIR$/analysis.html" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
@@ -17,21 +16,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
+      <file leaf-file-name="index.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-947">
+            <state relative-caret-position="15">
               <caret line="82" column="146" lean-forward="false" selection-start-line="82" selection-start-column="146" selection-end-line="82" selection-end-column="146" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="analysis.html" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/analysis.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="186">
-              <caret line="302" column="32" lean-forward="false" selection-start-line="302" selection-start-column="19" selection-end-line="302" selection-end-column="32" />
               <folding />
             </state>
           </provider>
@@ -93,6 +82,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -105,7 +95,6 @@
         </subPane>
       </pane>
       <pane id="Scope" />
-      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -154,6 +143,7 @@
       <workItem from="1530689851404" duration="375000" />
       <workItem from="1530690331771" duration="197000" />
       <workItem from="1530691741119" duration="160000" />
+      <workItem from="1530711322909" duration="48000" />
     </task>
     <task id="LOCAL-00001" summary="增加了进行新闻数据在线分析的页面">
       <created>1530405490746</created>
@@ -166,7 +156,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="10015000" />
+    <option name="totallyTimeSpent" value="10063000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1280" height="724" extended-state="0" />
@@ -209,6 +199,22 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1230">
+          <caret line="82" column="146" lean-forward="false" selection-start-line="82" selection-start-column="146" selection-end-line="82" selection-end-column="146" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/analysis.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="4530">
+          <caret line="302" column="32" lean-forward="false" selection-start-line="302" selection-start-column="19" selection-end-line="302" selection-end-column="32" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/index.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -318,18 +324,18 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/index.html">
+    <entry file="file://$PROJECT_DIR$/analysis.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-947">
-          <caret line="82" column="146" lean-forward="false" selection-start-line="82" selection-start-column="146" selection-end-line="82" selection-end-column="146" />
+        <state relative-caret-position="186">
+          <caret line="204" column="40" lean-forward="false" selection-start-line="204" selection-start-column="27" selection-end-line="204" selection-end-column="40" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/analysis.html">
+    <entry file="file://$PROJECT_DIR$/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="186">
-          <caret line="302" column="32" lean-forward="false" selection-start-line="302" selection-start-column="19" selection-end-line="302" selection-end-column="32" />
+        <state relative-caret-position="15">
+          <caret line="82" column="146" lean-forward="false" selection-start-line="82" selection-start-column="146" selection-end-line="82" selection-end-column="146" />
           <folding />
         </state>
       </provider>
