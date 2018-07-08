@@ -259,6 +259,7 @@
                         sortable: true,  
 				        halign:"center",
 						valign:"middle",
+                        width:'50px',
 						<!-- rowspan: 2, -->
                         formatter: function(val, row, index) {  
                             return index + 1;  
@@ -306,19 +307,17 @@
 						valign:"middle"
 						
 						
-                    }, 
+                    },
                 ],  
             }  
             return test;  
         };  
 		var data = [];
         
-        $.get("http://127.0.0.1:5000/querynews",null,function(result_, status_){
+        $.get("data/news.csv",null,function(result, status_){
            if(status_=="success")
            {
-               if(result_ !=null){
-
-                   $.get("http://127.0.0.1:5000/getcsv/"+result_,null,function(result){  
+               if(result !=null){
                   
                     //显示文件 
                     var relArr = result.split(/\n/);  
@@ -331,15 +330,15 @@
                                 obj["title"] = objArr[0];  
                                 obj["time"] = objArr[1]; 
 								obj["origin"] = objArr[2]; 
-								//obj["author"] = objArr[3]; 
-								//obj["article"] = objArr[4]; 
+								obj["author"] = objArr[3];
+								obj["article"] = objArr[5];
                                 data.push(obj);  
                             }  
                         }  
   
                     }  
                         $("#test-table").bootstrapTable("load", data);  
-                    })
+
                }
            }
             
