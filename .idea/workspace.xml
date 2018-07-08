@@ -2,18 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="faa4117b-c5ff-4447-a299-83683b8e706e" name="Default" comment="增加了进行新闻数据在线分析的页面">
-      <change beforePath="$PROJECT_DIR$/all_month2.csv" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/data/all.csv" afterPath="$PROJECT_DIR$/data/all.csv" />
-      <change beforePath="$PROJECT_DIR$/data/all.numbers" afterPath="$PROJECT_DIR$/data/all.numbers" />
-      <change beforePath="$PROJECT_DIR$/news_template.csv" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/news_template.numbers" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/ok.csv" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/新闻数据模板.csv" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/新闻数据模板.numbers" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/绍兴市新闻探测结果.csv" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/绍兴市新闻探测结果.numbers" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/绍兴市越城区.csv" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/绍兴市越城区.xlsx" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/result.html" afterPath="$PROJECT_DIR$/result.html" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -37,11 +26,21 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="data.html" pinned="false" current-in-tab="true">
+      <file leaf-file-name="data.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/data.html">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="174">
               <caret line="322" column="27" lean-forward="false" selection-start-line="322" selection-start-column="27" selection-end-line="322" selection-end-column="27" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="result.html" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/result.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="157">
+              <caret line="90" column="158" lean-forward="false" selection-start-line="90" selection-start-column="158" selection-end-line="90" selection-end-column="158" />
               <folding />
             </state>
           </provider>
@@ -74,6 +73,7 @@
       <list>
         <option value="$PROJECT_DIR$/index.html" />
         <option value="$PROJECT_DIR$/analysis.html" />
+        <option value="$PROJECT_DIR$/result.html" />
       </list>
     </option>
   </component>
@@ -165,7 +165,7 @@
       <workItem from="1530690331771" duration="197000" />
       <workItem from="1530691741119" duration="160000" />
       <workItem from="1530711322909" duration="48000" />
-      <workItem from="1531041865999" duration="629000" />
+      <workItem from="1531041865999" duration="723000" />
     </task>
     <task id="LOCAL-00001" summary="增加了进行新闻数据在线分析的页面">
       <created>1530405490746</created>
@@ -178,7 +178,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="10692000" />
+    <option name="totallyTimeSpent" value="10786000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1280" height="724" extended-state="0" />
@@ -367,6 +367,14 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="174">
           <caret line="322" column="27" lean-forward="false" selection-start-line="322" selection-start-column="27" selection-end-line="322" selection-end-column="27" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/result.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="157">
+          <caret line="90" column="158" lean-forward="false" selection-start-line="90" selection-start-column="158" selection-end-line="90" selection-end-column="158" />
           <folding />
         </state>
       </provider>
